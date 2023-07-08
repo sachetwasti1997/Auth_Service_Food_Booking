@@ -1,0 +1,4 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://auth-mongo-srv:27017/auth?directConnection=true
