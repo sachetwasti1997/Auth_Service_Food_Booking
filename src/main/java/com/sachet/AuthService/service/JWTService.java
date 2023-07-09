@@ -13,7 +13,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
-@Service
+
 public class JWTService {
 
     private final JwtParser parser;
