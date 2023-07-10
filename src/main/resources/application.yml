@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://auth-mongo-srv:27017/auth?directConnection=true
+      uri: ${AUTH_MONGO_URL:mongodb://auth-food-mongo-srv:27017/auth?directConnection=true}
   application:
     name: AUTH-SERVICE
 

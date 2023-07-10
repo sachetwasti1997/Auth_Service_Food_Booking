@@ -3,6 +3,9 @@ package com.sachet.AuthService.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Document
 public class User {
 
@@ -12,15 +15,17 @@ public class User {
     private String userName;
     private String email;
     private String password;
+    List<String> roles;
 
     public User() {
     }
 
-    public User(String name, String userName, String email, String password) {
+    public User(String name, String userName, String email, String password, List<String> roles) {
         this.name = name;
         this.userName = userName;
         this.email = email;
         this.password = password;
+        this.roles = roles;
     }
 
     public String getName() {
@@ -53,5 +58,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 }
