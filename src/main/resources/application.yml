@@ -4,12 +4,3 @@ spring:
       uri: ${AUTH_MONGO_URL:mongodb://auth-food-mongo-srv:27017/auth?directConnection=true}
   application:
     name: AUTH-SERVICE
-
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: ${EUREKA_SERVER_ADDRESS:http://localhost:8761/eureka}
