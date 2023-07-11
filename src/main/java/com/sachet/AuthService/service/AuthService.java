@@ -11,11 +11,18 @@ import reactor.core.publisher.Mono;
 public class AuthService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
-  public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+  private final JWTService jwtService;
+
+  public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JWTService jwtService) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
+    this.jwtService = jwtService;
   }
-//  public Mono<JwtResponse> signUp(User user) {
-//
-//  }
+  public Mono<JwtResponse> signUp(User user) {
+    return userRepository.save(user)
+        .map(userModel -> {
+          String token = jwtService.generateToken(userModel);
+          return new JwtResponse(token);
+        });
+  }
 }

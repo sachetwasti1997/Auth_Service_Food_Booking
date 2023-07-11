@@ -7,6 +7,7 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -16,8 +17,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@Service
 public class JWTService {
+
+    @Value("${secure_key}")
+    private String SECRET_KEY ;
 
     public String generateToken(User userModel){
         Map<String, Object> claims = new HashMap<>();
@@ -25,7 +29,7 @@ public class JWTService {
     }
 
     private String createToken(Map<String, Object> claims, User userModel){
-        SecretKey key = Keys.hmacShaKeyFor("#wed$443@3hg".getBytes());
+        SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userModel.getEmail())
