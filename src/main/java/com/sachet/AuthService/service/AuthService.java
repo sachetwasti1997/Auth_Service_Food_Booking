@@ -1,16 +1,16 @@
 package com.sachet.AuthService.service;
 
 import com.sachet.AuthService.exception.EmailAlreadyInUse;
+import com.sachet.AuthService.exception.InvalidCredentialsException;
 import com.sachet.AuthService.models.JwtResponse;
+import com.sachet.AuthService.models.Login;
 import com.sachet.AuthService.models.User;
 import com.sachet.AuthService.repository.UserRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-
-import java.util.Objects;
 
 @Service
 public class AuthService {
@@ -33,5 +33,13 @@ public class AuthService {
                 .map(userR -> new JwtResponse(jwtService.generateToken(userR)))
         )
         .cast(JwtResponse.class);
+  }
+
+  public Mono<JwtResponse> login(Login login) {
+    return userRepository.findByEmail(login.getUserName())
+        .switchIfEmpty(Mono.error(new InvalidCredentialsException()))
+        .filter(user -> passwordEncoder.matches(login.getPassword(), user.getPassword()))
+        .switchIfEmpty(Mono.error(new InvalidCredentialsException()))
+        .map(user -> new JwtResponse(jwtService.generateToken(user)));
   }
 }

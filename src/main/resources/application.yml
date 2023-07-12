@@ -6,3 +6,7 @@ spring:
     name: AUTH-SERVICE
 
 secure_key: SECURE_KEY
+
+server:
+  error:
+    include-message: always

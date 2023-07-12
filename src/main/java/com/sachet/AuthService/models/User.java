@@ -1,9 +1,11 @@
 package com.sachet.AuthService.models;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Document
@@ -12,8 +14,14 @@ public class User {
     @Id
     private String id;
     private String name;
+    @NotBlank(message = "UserName cannot be blank!")
+    @Size(min = 5, max = 255, message = "UserName cannot be less than 5 and more than 10 characters!")
     private String userName;
+    @NotBlank(message = "Email cannot be blank!")
+    @Pattern(regexp = "[a-zA-Z0-9]+@[a-z]+\\.[a-z]{2,3}", message = "Please Enter a valid email!")
     private String email;
+    @NotBlank(message = "Password cannot be blank!")
+    @Size(min = 5, max = 10, message = "Password cannot be less than 5 and more than 10 characters")
     private String password;
     List<String> roles;
 
