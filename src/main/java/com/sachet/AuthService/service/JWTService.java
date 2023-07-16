@@ -29,6 +29,7 @@ public class JWTService {
     }
 
     private String createToken(Map<String, Object> claims, User userModel){
+        System.out.println(SECRET_KEY);
         SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
         return Jwts.builder()
                 .setClaims(claims)
